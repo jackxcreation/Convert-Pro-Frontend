@@ -1,10 +1,12 @@
-export default function About() {
+export default function AboutPage() {
   return (
-    <div className="p-10">
-      <h1 className="text-3xl font-bold mb-4">About Convert Pro</h1>
-      <p>
-        Convert Pro is a modern online file converter. Smooth, fast and secure – built for students and professionals.
+    <main className="max-w-3xl mx-auto px-6 py-12">
+      <h1 className="text-4xl font-bold mb-6">About Convert Pro</h1>
+      <p className="text-gray-700 leading-relaxed">
+        Convert Pro is your all-in-one online file conversion platform. We aim to provide 
+        a smooth, secure, and fast experience for students, creators, and professionals 
+        worldwide. Whether it's images, documents, audio, or videos, we’ve got you covered.
       </p>
-    </div>
+    </main>
   );
 }
