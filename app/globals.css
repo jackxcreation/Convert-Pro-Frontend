@@ -1,7 +1,11 @@
+/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: sans-serif;
-}
+/* Smooth text + focus */
+* { outline-color: theme(colors.indigo.500); }
+html, body { scroll-behavior: smooth; }
+
+/* Pretty selection */
+::selection { background: #c7d2fe; color: #111827; }
