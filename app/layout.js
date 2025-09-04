@@ -11,8 +11,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-gray-50 text-gray-900">
+        {/* Top Navbar */}
         <Navbar />
+
+        {/* Page Content */}
         <main className="min-h-screen">{children}</main>
+
+        {/* Bottom Footer */}
         <Footer />
       </body>
     </html>
