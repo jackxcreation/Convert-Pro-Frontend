@@ -1,7 +1,8 @@
 // app/layout.js
 import "./globals.css";
-import Navbar from "@/components/Navbar";   // 👈 relative se hatao, alias @ use karo
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CTABar from "@/components/CTABar";   // 👈 sticky upgrade bar
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,6 +27,9 @@ export default function RootLayout({ children }) {
 
           {/* Footer (always at bottom) */}
           <Footer />
+
+          {/* Sticky CTA Bar */}
+          <CTABar />
         </div>
       </body>
     </html>
