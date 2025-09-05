@@ -1,69 +1,50 @@
 "use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu } from "lucide-react";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <motion.nav
-      initial={{ y: -80, opacity: 0 }}
+      initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-xl border-b border-white/20"
+      transition={{ duration: 0.5 }}
+      className={`sticky top-0 z-50 w-full transition-all ${
+        scrolled
+          ? "backdrop-blur-xl bg-white/70 border-b border-zinc-200/50 shadow-sm py-2"
+          : "bg-transparent py-4"
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="mx-auto max-w-7xl flex items-center justify-between px-6">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
-          Convert Pro
+        <Link href="/" className="text-2xl font-extrabold bg-gradient-to-r from-indigo-600 to-fuchsia-600 bg-clip-text text-transparent">
+          ConvertPro
         </Link>
 
-        {/* Links (Desktop) */}
-        <div className="hidden md:flex gap-8 text-white/90">
-          {["Features", "Pricing", "About", "Contact"].map((item, i) => (
-            <Link
-              key={i}
-              href={`/${item.toLowerCase()}`}
-              className="relative group"
-            >
-              {item}
-              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-indigo-400 to-cyan-400 transition-all duration-300 group-hover:w-full" />
-            </Link>
-          ))}
+        {/* Links */}
+        <div className="hidden md:flex gap-6 text-sm font-medium">
+          <Link href="/features" className="hover:text-indigo-600 transition">Features</Link>
+          <Link href="/pricing" className="hover:text-indigo-600 transition">Pricing</Link>
+          <Link href="/about" className="hover:text-indigo-600 transition">About</Link>
+          <Link href="/contact" className="hover:text-indigo-600 transition">Contact</Link>
         </div>
 
-        {/* Auth Buttons */}
-        <div className="hidden md:flex gap-4">
-          <button className="px-4 py-2 rounded-xl bg-white/10 text-white/80 hover:bg-white/20 transition">
-            Login
-          </button>
-          <button className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 text-white font-semibold hover:scale-105 transition">
-            Get Started
-          </button>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button onClick={() => setOpen(!open)} className="md:hidden text-white">
-          {open ? <X /> : <Menu />}
+        {/* Mobile Menu */}
+        <button className="md:hidden p-2 rounded-lg hover:bg-zinc-100 transition">
+          <Menu size={22} />
         </button>
       </div>
-
-      {/* Mobile Menu */}
-      {open && (
-        <div className="md:hidden bg-black/70 backdrop-blur-lg p-6 space-y-4 text-white">
-          {["Features", "Pricing", "About", "Contact"].map((item, i) => (
-            <Link key={i} href={`/${item.toLowerCase()}`} className="block">
-              {item}
-            </Link>
-          ))}
-          <div className="flex gap-3">
-            <button className="flex-1 px-4 py-2 rounded-lg bg-white/10">Login</button>
-            <button className="flex-1 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500">Get Started</button>
-          </div>
-        </div>
-      )}
     </motion.nav>
   );
-}
+          }
