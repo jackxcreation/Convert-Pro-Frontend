@@ -1,78 +1,69 @@
 "use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Menu, X, Zap, ShieldCheck, Sparkles } from "lucide-react";
-import AuthButtons from "./AuthButtons";
-
-const NavLink = ({ href, children, onClick }) => (
-  <Link
-    href={href}
-    onClick={onClick}
-    className="px-3 py-2 text-sm font-medium text-zinc-700 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-colors"
-  >
-    {children}
-  </Link>
-);
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/60 border-b border-zinc-200">
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Left: Logo */}
-        <div className="flex items-center gap-2">
-          <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 flex items-center justify-center shadow-sm">
-            <Zap size={18} className="text-white" />
-          </div>
-          <Link href="/" className="text-lg font-semibold tracking-tight">
-            Convert <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">Pro</span>
-          </Link>
+    <motion.nav
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="fixed top-0 left-0 w-full z-50 bg-white/10 backdrop-blur-xl border-b border-white/20"
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+          Convert Pro
+        </Link>
+
+        {/* Links (Desktop) */}
+        <div className="hidden md:flex gap-8 text-white/90">
+          {["Features", "Pricing", "About", "Contact"].map((item, i) => (
+            <Link
+              key={i}
+              href={`/${item.toLowerCase()}`}
+              className="relative group"
+            >
+              {item}
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-gradient-to-r from-indigo-400 to-cyan-400 transition-all duration-300 group-hover:w-full" />
+            </Link>
+          ))}
         </div>
 
-        {/* Center: Desktop links */}
-        <div className="hidden md:flex items-center gap-1">
-          <NavLink href="/features">Features</NavLink>
-          <NavLink href="/pricing">Pricing</NavLink>
-          <NavLink href="/about">About</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
+        {/* Auth Buttons */}
+        <div className="hidden md:flex gap-4">
+          <button className="px-4 py-2 rounded-xl bg-white/10 text-white/80 hover:bg-white/20 transition">
+            Login
+          </button>
+          <button className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 text-white font-semibold hover:scale-105 transition">
+            Get Started
+          </button>
         </div>
 
-        {/* Right: Auth */}
-        <div className="hidden md:flex items-center gap-2">
-          <div className="hidden lg:flex items-center gap-1 text-xs text-zinc-500 pr-2">
-            <ShieldCheck size={16} />
-            <span>Secure</span>
-            <Sparkles size={16} className="ml-2" />
-            <span>Fast</span>
-          </div>
-          <AuthButtons />
-        </div>
-
-        {/* Mobile: Menu button */}
-        <button
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-          className="md:hidden inline-flex items-center justify-center rounded-xl p-2 hover:bg-zinc-100 transition"
-        >
+        {/* Mobile Menu Button */}
+        <button onClick={() => setOpen(!open)} className="md:hidden text-white">
           {open ? <X /> : <Menu />}
         </button>
-      </nav>
+      </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile Menu */}
       {open && (
-        <div className="md:hidden border-t border-zinc-200 bg-white/90 backdrop-blur-xl">
-          <div className="px-4 py-3 flex flex-col gap-1">
-            <NavLink href="/features" onClick={() => setOpen(false)}>Features</NavLink>
-            <NavLink href="/pricing" onClick={() => setOpen(false)}>Pricing</NavLink>
-            <NavLink href="/about" onClick={() => setOpen(false)}>About</NavLink>
-            <NavLink href="/contact" onClick={() => setOpen(false)}>Contact</NavLink>
-            <div className="pt-2">
-              <AuthButtons />
-            </div>
+        <div className="md:hidden bg-black/70 backdrop-blur-lg p-6 space-y-4 text-white">
+          {["Features", "Pricing", "About", "Contact"].map((item, i) => (
+            <Link key={i} href={`/${item.toLowerCase()}`} className="block">
+              {item}
+            </Link>
+          ))}
+          <div className="flex gap-3">
+            <button className="flex-1 px-4 py-2 rounded-lg bg-white/10">Login</button>
+            <button className="flex-1 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500">Get Started</button>
           </div>
         </div>
       )}
-    </header>
+    </motion.nav>
   );
 }
