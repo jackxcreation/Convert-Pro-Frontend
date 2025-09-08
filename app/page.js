@@ -102,3 +102,41 @@ export default function Home() {
     </div>
   );
         }
+import FileUploader from "@/components/FileUploader";
+import DownloadButton from "@/components/DownloadButton";
+
+// ... (OLD CODE REMAINS SAME)
+
+export default function Home() {
+  return (
+    <div className="bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-white">
+      {/* --- Old hero, features, CTA sections --- */}
+      {/* ... पुराना कोड वही रहेगा ... */}
+      
+      {/* ========== New Upload + Download Section ========== */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-2xl font-bold mb-4 text-center text-zinc-900">
+            Convert & Download Your Files Instantly
+          </h2>
+          <FileUploader
+            maxFiles={5}
+            onConversionComplete={(result) => {
+              // Download option after successful conversion - Example
+              // Render DownloadButton only if result.downloadUrl exists
+              if (result && result.downloadUrl) {
+                // Show a notification or render download button as needed
+                // Can use toast, alert, or state in higher parent to show
+              }
+            }}
+          />
+          {/* 
+            If you want a static download button for demo, use:
+            <DownloadButton downloadUrl="/your/file/url" filename="converted_file.pdf" />
+            But usually DownloadButton will be inside FileUploader when conversion is complete.
+          */}
+        </div>
+      </section>
+    </div>
+  );
+}
