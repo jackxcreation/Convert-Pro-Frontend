@@ -1,10 +1,9 @@
-// app/layout.js
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import CTABar from "@/components/CTABar";   // 👈 sticky upgrade bar
+import CTABar from "@/components/CTABar";
 import { Inter } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";  // 👈 added
+import ClientSpeedInsights from "@/components/ClientSpeedInsights";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,21 +19,12 @@ export default function RootLayout({ children }) {
         className={`${inter.className} bg-gradient-to-b from-zinc-50 to-white text-zinc-900 antialiased`}
       >
         <div className="min-h-screen flex flex-col">
-          {/* Top Navbar */}
           <Navbar />
-
-          {/* Main Content */}
           <main className="flex-1">{children}</main>
-
-          {/* Footer (always at bottom) */}
           <Footer />
-
-          {/* Sticky CTA Bar */}
           <CTABar />
         </div>
-
-        {/* Vercel Speed Insights */}
-        <SpeedInsights /> 
+        <ClientSpeedInsights />
       </body>
     </html>
   );
