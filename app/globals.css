@@ -1,11 +1,31 @@
-/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Smooth text + focus */
-* { outline-color: theme(colors.indigo.500); }
-html, body { scroll-behavior: smooth; }
+/* Basic resets / body */
+html, body, #__next {
+  height: 100%;
+}
 
-/* Pretty selection */
-::selection { background: #c7d2fe; color: #111827; }
+body {
+  @apply bg-gradient-to-b from-zinc-50 to-white text-zinc-900 antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* small helpers */
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium;
+}
+
+/* glass utility */
+.glass {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* simple hero spacing for mobile */
+.hero-pad {
+  padding-top: 5.5rem; /* keep space for fixed navbar */
+}
