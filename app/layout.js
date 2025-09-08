@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CTABar from "@/components/CTABar";   // 👈 sticky upgrade bar
 import { Inter } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";  // 👈 added
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,9 @@ export default function RootLayout({ children }) {
           {/* Sticky CTA Bar */}
           <CTABar />
         </div>
+
+        {/* Vercel Speed Insights */}
+        <SpeedInsights /> 
       </body>
     </html>
   );
