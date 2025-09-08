@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Google, Mail, Lock, User } from "lucide-react";
-import { createClient } from "@supabase/supabase-js"; // ✅ Fixed import
+import { createBrowserClient } from "@supabase/ssr";
 
 export default function AuthSplitPage({ supabaseClient } = {}) {
   // UI state
