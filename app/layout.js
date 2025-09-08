@@ -1,9 +1,8 @@
+// app/layout.js
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import CTABar from "@/components/CTABar";
 import { Inter } from "next/font/google";
-import ClientSpeedInsights from "@/components/ClientSpeedInsights";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +19,9 @@ export default function RootLayout({ children }) {
       >
         <div className="min-h-screen flex flex-col">
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 hero-pad">{children}</main>
           <Footer />
-          <CTABar />
         </div>
-        <ClientSpeedInsights />
       </body>
     </html>
   );
