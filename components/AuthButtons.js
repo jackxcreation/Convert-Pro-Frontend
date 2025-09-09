@@ -1,7 +1,7 @@
 // components/AuthButtons.js
 "use client";
 import { useEffect, useState, useMemo } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
 
 /**
  * Simple Auth buttons component.
@@ -10,26 +10,31 @@ import { createClient } from "@supabase/supabase-js";
 
 export default function AuthButtons() {
   const [user, setUser] = useState(null);
+
   const supabase = useMemo(() => {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     if (!url || !key) return null;
-    return createClient(url, key);
+    return createBrowserClient(url, key);
   }, []);
 
   useEffect(() => {
     if (!supabase) return;
-    // initial user
+
+    // initial user load
     supabase.auth.getUser().then((res) => {
       setUser(res?.data?.user || null);
     });
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
+    // subscribe to auth changes
+    const { data: subscription } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
 
     return () => {
-      sub?.subscription?.unsubscribe?.();
+      subscription?.subscription?.unsubscribe?.();
     };
   }, [supabase]);
 
@@ -37,7 +42,12 @@ export default function AuthButtons() {
     // no supabase keys configured
     return (
       <div className="flex gap-2">
-        <a href="/auth" className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm">Sign in</a>
+        <a
+          href="/auth"
+          className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm"
+        >
+          Sign in
+        </a>
       </div>
     );
   }
@@ -55,15 +65,28 @@ export default function AuthButtons() {
     <div>
       {user ? (
         <div className="flex items-center gap-3">
-          <div className="text-sm text-zinc-700">Hi, {user.email ?? "User"}</div>
-          <button onClick={signOut} className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-sm">
+          <div className="text-sm text-zinc-700">
+            Hi, {user.email ?? "User"}
+          </div>
+          <button
+            onClick={signOut}
+            className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-sm"
+          >
             Logout
           </button>
         </div>
       ) : (
         <div className="flex gap-2">
-          <a href="/auth" className="px-4 py-2 rounded-xl bg-white/10 text-sm">Sign in</a>
-          <button onClick={() => signInWithProvider("google")} className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 text-white text-sm">
+          <a
+            href="/auth"
+            className="px-4 py-2 rounded-xl bg-white/10 text-sm"
+          >
+            Sign in
+          </a>
+          <button
+            onClick={() => signInWithProvider("google")}
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 text-white text-sm"
+          >
             Google
           </button>
         </div>
