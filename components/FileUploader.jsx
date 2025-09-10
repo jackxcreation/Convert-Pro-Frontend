@@ -1,5 +1,3 @@
-# Enhanced File Uploader Component for Convert Pro
-
 ```jsx
 // components/FileUploader.jsx
 
@@ -489,13 +487,3 @@ import FileUploader from '@/components/FileUploader';
   }}
 />
 ```
-
-This FileUploader component provides:
-- ✅ **Drag & Drop Interface** (Modern drag-drop with visual feedback)
-- ✅ **Real-time Progress** (Upload and conversion progress tracking)
-- ✅ **Format Selection** (Dynamic output format selection)
-- ✅ **Batch Processing** (Multiple file support)
-- ✅ **Error Handling** (Comprehensive error display and management)
-- ✅ **Download Management** (Secure download links with file info)
-- ✅ **Responsive Design** (Mobile-friendly interface)
-- ✅ **Animations** (Smooth Framer Motion animations)
