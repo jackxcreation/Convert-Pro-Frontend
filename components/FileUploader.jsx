@@ -1,6 +1,3 @@
-```jsx
-// components/FileUploader.jsx
-
 "use client";
 
 import React, { useState, useCallback, useRef } from 'react';
@@ -467,23 +464,3 @@ const FileUploader = ({
 };
 
 export default FileUploader;
-```
-
-## Usage in your main page:
-
-```jsx
-// app/page.js - Add to your existing page
-
-import FileUploader from '@/components/FileUploader';
-
-// Add this component where you want the uploader
-<FileUploader 
-  maxFiles={5}
-  onFileUploaded={(result) => {
-    console.log('File uploaded:', result);
-  }}
-  onConversionComplete={(result) => {
-    console.log('Conversion completed:', result);
-  }}
-/>
-```
